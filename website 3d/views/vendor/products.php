@@ -9,7 +9,7 @@
     <style>
         body { background-color: #f8f9fa; }
         .sidebar { min-height: 100vh; background-color: #212529; }
-        .sidebar .nav-link { color: #rgba(255,255,255,.75); padding: 12px 20px; }
+        .sidebar .nav-link { color: rgba(255,255,255,.75); padding: 12px 20px; }
         .sidebar .nav-link.active, .sidebar .nav-link:hover { color: #fff; background-color: #0d6efd; }
     </style>
 </head>
