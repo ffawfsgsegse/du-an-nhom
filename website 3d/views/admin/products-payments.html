@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Kiểm duyệt & Đối soát · 3DPrintHub Admin</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="dashboard.html"
+        ><span class="logo-icon">⬡</span> 3D<span>PRINT</span>HUB · ADMIN</a
+      >
+      <nav>
+        <a href="dashboard.html">1. Tổng quan & Xưởng in</a>
+        <a
+          href="products-payments.html"
+          style="color: #aa8aff; font-weight: 700"
+          >2. Sản phẩm & Đối soát</a
+        >
+        <a href="users-wallet.html">3. Tài khoản & Số dư</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-ghost btn-sm" href="../client/home.html"
+          >Về trang khách ↗</a
+        >
+      </div>
+    </header>
+
+    <main>
+      <section class="container section page-top">
+        <div class="eyebrow">MODERATION & RECONCILIATION</div>
+        <h1 class="page-title">Kiểm duyệt <em>& Đối soát</em></h1>
+
+        <div class="panel">
+          <h2>Kiểm duyệt sản phẩm</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Sản phẩm</th>
+                  <th>Gian hàng</th>
+                  <th>Giá</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Cánh tay Robot 4 bậc tự do</td>
+                  <td>Xưởng In TechLab</td>
+                  <td>240.000 ₫</td>
+                  <td><span class="pay-badge pay-confirmed">active</span></td>
+                  <td><button class="btn btn-ghost btn-sm">Ẩn</button></td>
+                </tr>
+                <tr>
+                  <td>Vỏ hộp Raspberry Pi 5 tản nhiệt</td>
+                  <td>Xưởng In TechLab</td>
+                  <td>125.000 ₫</td>
+                  <td><span class="pay-badge pay-unpaid">pending</span></td>
+                  <td>
+                    <button class="btn btn-primary btn-sm">Hiển thị</button>
+                    <button class="btn btn-ghost btn-sm">Ẩn</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">PAYMENT MONITOR</div>
+              <h2>Đối soát chuyển khoản</h2>
+            </div>
+            <span class="pay-badge pay-submitted">1 chờ xác nhận</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Đơn</th>
+                  <th>Gian hàng</th>
+                  <th>Khách</th>
+                  <th>Số tiền</th>
+                  <th>Ngân hàng</th>
+                  <th>Trạng thái</th>
+                  <th>Quyết định</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>3DP-8A92F1</b></td>
+                  <td>Xưởng In TechLab</td>
+                  <td>Nguyễn Văn An</td>
+                  <td>370.000 ₫</td>
+                  <td>
+                    Vietcombank
+                    <div class="muted">0011001234567</div>
+                  </td>
+                  <td>
+                    <span class="pay-badge pay-submitted">Chờ xác nhận</span>
+                  </td>
+                  <td>
+                    <button class="btn btn-primary btn-sm">
+                      ✓ Đã nhận tiền
+                    </button>
+                    <button class="btn btn-ghost btn-sm">
+                      Cần kiểm tra lại
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container copyright">© 2026 3DPrintHub Admin Panel</div>
+    </footer>
+  </body>
+</html>

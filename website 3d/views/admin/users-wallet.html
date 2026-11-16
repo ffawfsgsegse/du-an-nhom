@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tài khoản & Số dư · 3DPrintHub Admin</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="dashboard.html"
+        ><span class="logo-icon">⬡</span> 3D<span>PRINT</span>HUB · ADMIN</a
+      >
+      <nav>
+        <a href="dashboard.html">1. Tổng quan & Xưởng in</a>
+        <a href="products-payments.html">2. Sản phẩm & Đối soát</a>
+        <a href="users-wallet.html" style="color: #aa8aff; font-weight: 700"
+          >3. Tài khoản & Số dư</a
+        >
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-ghost btn-sm" href="../client/home.html"
+          >Về trang khách ↗</a
+        >
+      </div>
+    </header>
+
+    <main>
+      <section class="container section page-top">
+        <div class="eyebrow">USERS & LEDGER</div>
+        <h1 class="page-title">Tài khoản <em>& Số dư</em></h1>
+
+        <div class="panel">
+          <h2>Quản lý tài khoản người dùng</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Họ tên</th>
+                  <th>Email</th>
+                  <th>Vai trò</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Admin Hệ Thống</td>
+                  <td>admin@3dprinthub.vn</td>
+                  <td><span class="status">admin</span></td>
+                  <td>Hoạt động</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td>Trần Hoàng Minh</td>
+                  <td>techlab@3dprinthub.vn</td>
+                  <td><span class="status">vendor</span></td>
+                  <td>Hoạt động</td>
+                  <td><button class="btn btn-ghost btn-sm">Khóa</button></td>
+                </tr>
+                <tr>
+                  <td>Nguyễn Văn An</td>
+                  <td>nguyenvana@gmail.com</td>
+                  <td><span class="status">client</span></td>
+                  <td>Hoạt động</td>
+                  <td><button class="btn btn-ghost btn-sm">Khóa</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>💳 Quản lý số dư & Nạp tiền</h2>
+          <div
+            class="stat-grid"
+            style="
+              grid-template-columns: repeat(3, minmax(0, 1fr));
+              margin: 16px 0 25px;
+            "
+          >
+            <div class="stat-card">
+              Tổng số dư khách hàng<strong>500.000 ₫</strong>
+            </div>
+            <div class="stat-card">
+              Giao dịch nạp đối soát<strong>3</strong>
+            </div>
+            <div class="stat-card">Đơn thanh toán số dư<strong>4</strong></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mã đơn</th>
+                  <th>Gian hàng</th>
+                  <th>Doanh số</th>
+                  <th>Khoản phải trả</th>
+                  <th>Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>3DP-8A92F1</td>
+                  <td>Xưởng In TechLab</td>
+                  <td>240.000 ₫</td>
+                  <td>240.000 ₫</td>
+                  <td><span class="pay-badge pay-confirmed">eligible</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container copyright">© 2026 3DPrintHub Admin Panel</div>
+    </footer>
+  </body>
+</html>

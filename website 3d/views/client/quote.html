@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>In 3D theo yêu cầu · 3DPrintHub</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="home.html"
+        ><span class="logo-icon">⬡</span> 3D<span>PRINT</span>HUB</a
+      >
+      <nav>
+        <a href="home.html">Trang chủ</a>
+        <a href="catalog.html">Khám phá</a>
+        <a href="quote.html" style="color: #aa8aff; font-weight: 700"
+          >In 3D theo yêu cầu</a
+        >
+      </nav>
+      <div class="nav-actions">
+        <a class="cart-link" href="cart-orders.html">🛒 <span>2</span></a>
+      </div>
+    </header>
+
+    <main>
+      <section class="container section page-top narrow">
+        <div class="eyebrow">CUSTOM 3D PRINTING</div>
+        <h1 class="page-title">In theo <em>yêu cầu</em></h1>
+        <p class="muted">
+          Tải file STL/OBJ, nhập thể tích ước lượng (cm³) và thông số in. Giá
+          hiển thị là tạm tính trước khi xưởng duyệt.
+        </p>
+
+        <div class="panel">
+          <form class="stack">
+            <label
+              >Xưởng in
+              <select>
+                <option>Xưởng In TechLab (Thanh Xuân, Hà Nội)</option>
+                <option>ArtPrint Studio (Quận 1, TP.HCM)</option>
+              </select>
+            </label>
+            <label
+              >Vật liệu
+              <select>
+                <option>Nhựa PLA+ Cao Cấp — 3.000 ₫/cm³</option>
+                <option>Nhựa ABS Chịu Nhiệt — 3.600 ₫/cm³</option>
+                <option>Resin 8K Tiêu Chuẩn — 6.500 ₫/cm³</option>
+              </select>
+            </label>
+            <label
+              >File mô hình STL / OBJ
+              <input type="file" accept=".stl,.obj" />
+            </label>
+            <div class="form-grid">
+              <label
+                >Thể tích ước tính (cm³)<input
+                  type="number"
+                  step="0.01"
+                  value="45.8"
+              /></label>
+              <label>Số lượng<input type="number" min="1" value="1" /></label>
+              <label
+                >Infill (%)<input type="number" min="1" max="100" value="20"
+              /></label>
+              <label
+                >Layer height (mm)<input type="number" step="0.01" value="0.20"
+              /></label>
+            </div>
+            <button type="button" class="btn btn-primary btn-lg">
+              Gửi yêu cầu báo giá ↗
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container copyright">
+        © 2026 3DPrintHub · Built for creators.
+      </div>
+    </footer>
+  </body>
+</html>
