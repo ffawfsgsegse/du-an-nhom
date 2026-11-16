@@ -1,0 +1,4 @@
+<?php if(($p['payment_status']??'')==='submitted' && ($p['payment_provider']??'manual')==='manual' && $p['order_status']!=='cancelled'):?>
+    <form method="post" class="inline-form" data-confirm="Chỉ xác nhận khi bạn đã kiểm tra đúng tiền vào tài khoản ngân hàng. Đồng ý?"><?php formtoken();?><input type="hidden" name="action" value="payment_review"><input type="hidden" name="order_id" value="<?=$p['id']?>"><input type="hidden" name="decision" value="confirmed"><button class="btn btn-primary btn-sm">✓ Đã nhận tiền</button></form>
+    <form method="post" class="inline-form"><?php formtoken();?><input type="hidden" name="action" value="payment_review"><input type="hidden" name="order_id" value="<?=$p['id']?>"><input type="hidden" name="decision" value="rejected"><input name="reason" class="review-reason" placeholder="Lý do cần kiểm tra" maxlength="255"><button class="btn btn-ghost btn-sm">Cần kiểm tra lại</button></form>
+<?php endif;?>
