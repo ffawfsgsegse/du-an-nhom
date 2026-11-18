@@ -1,0 +1,5 @@
+<?php defined('APP_BOOTSTRAPPED')||exit;$v=approved_vendor();$adminMode=false;$product=null;$id=(int)($_GET['id']??0);
+if($id){$product=dbone('SELECT p.*,pi.image_path FROM products p LEFT JOIN product_images pi ON pi.product_id=p.id WHERE p.id=? AND p.vendor_id=? AND p.deleted_at IS NULL',[$id,$v['id']]);if(!$product){http_response_code(404);}}
+$cats=categories();$materials=dball('SELECT * FROM materials WHERE vendor_id=? AND status=1',[$v['id']]);
+?>
+<section class="container section page-top"><div class="dash-layout"><?php require __DIR__.'/../partials/side_nav.php';?><div class="dash-main"><div class="eyebrow">SELLER PRODUCT EDITOR</div><h1 class="page-title"><?=$id?'Chỉnh sửa':'Đăng mới'?> <em>sản phẩm</em></h1><div class="panel"><?php if($id&&!$product):?><h2>Không tìm thấy sản phẩm được phép sửa.</h2><?php elseif(!$materials):?><p class="notice notice-info">Bạn cần tạo vật liệu trong trang Quản lý sản phẩm trước khi đăng hàng.</p><a class="btn btn-outline" href="<?=h(url('vendor_products'))?>">Quản lý vật liệu</a><?php else:?><?php require __DIR__.'/../partials/product_form.php';?><?php endif;?></div></div></div></section>
