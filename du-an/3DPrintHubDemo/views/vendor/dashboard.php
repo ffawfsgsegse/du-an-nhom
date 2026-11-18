@@ -1,0 +1,10 @@
+<?php defined('APP_BOOTSTRAPPED')||exit;$v=vendor_of_user();if(!$v):?>
+<section class="container section page-top"><h1>Chưa có gian hàng</h1><a href="<?=h(url('apply'))?>" class="btn btn-primary">Đăng ký gian hàng</a></section>
+<?php else:$my=vendor_products((int)$v['id']);$orders=vendor_orders((int)$v['id']);$completed=dbone('SELECT COALESCE(SUM(total_amount),0) total, COUNT(*) n FROM orders WHERE vendor_id=? AND order_status="completed"',[$v['id']]); ?>
+<section class="container section page-top"><div class="dash-layout"><?php require __DIR__.'/../partials/side_nav.php';?><div class="dash-main"><div class="eyebrow">SELLER CENTER</div><h1 class="page-title">Xin chào, <em><?=h($v['shop_name'])?></em></h1><p class="muted">Gian hàng: <?=h($v['address'])?> · Trạng thái: <strong><?=h($v['status'])?></strong></p>
+<?php if($v['status']!=='approved'):?><div class="notice notice-info">Gian hàng chưa được duyệt. Các chức năng bán hàng sẽ hoạt động sau khi Admin phê duyệt.</div><?php else:?>
+<div class="stat-grid seller-stat"><div class="stat-card">Sản phẩm <strong><?=count($my)?></strong></div><div class="stat-card">Đơn hàng <strong><?=count($orders)?></strong></div><div class="stat-card">Đơn hoàn tất <strong><?=$completed['n']?></strong></div><div class="stat-card">Doanh thu <strong><?=money($completed['total'])?></strong></div></div>
+<div class="dashboard-actions"><a class="btn btn-primary" href="<?=h(url('vendor_product_edit'))?>">+ Đăng sản phẩm</a><a class="btn btn-outline" href="<?=h(url('vendor_orders'))?>">Quản lý đơn hàng</a></div>
+<div class="panel"><h2>Đơn hàng gần đây</h2><div class="table-wrap"><table><thead><tr><th>Mã đơn</th><th>Khách hàng</th><th>Số tiền</th><th>Trạng thái</th></tr></thead><tbody><?php foreach(array_slice($orders,0,8) as $o):?><tr><td><?=h($o['order_code'])?></td><td><?=h($o['customer_name'])?></td><td><?=money($o['total_amount'])?></td><td><?=h(order_status_label($o['order_status']))?></td></tr><?php endforeach;?></tbody></table></div></div>
+<?php endif;?></div></div></section>
+<?php endif;?>

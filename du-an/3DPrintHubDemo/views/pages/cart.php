@@ -1,0 +1,9 @@
+<?php defined('APP_BOOTSTRAPPED')||exit;$cart=$_SESSION['cart']??[];$items=[];$total=0;
+foreach($cart as $id=>$quantity){$p=public_product((int)$id);if($p){$p['qty']=(int)$quantity;$items[]=$p;$total+=(float)$p['price']*$quantity;}}
+?>
+<section class="container section page-top"><div class="eyebrow">CHECKOUT FLOW</div><h1 class="page-title">Giỏ hàng <em>của bạn</em></h1>
+<?php if(!$items):?><div class="panel empty-state">Giỏ hàng đang trống. <a href="<?=h(url('catalog'))?>">Khám phá sản phẩm</a></div><?php else:?>
+<div class="cart-layout"><div class="panel"><h2>Danh sách sản phẩm</h2>
+<?php foreach($items as $p):?><div class="cart-item"><div class="thumb"><?php if($p['image_path']):?><img src="<?=h($p['image_path'])?>" alt=""><?php else:?>⬡<?php endif;?></div><div class="cart-item-name"><b><?=h($p['name'])?></b><small><?=h($p['shop_name'])?></small><span><?=money($p['price'])?></span></div><form method="post" action="<?=h(url('cart'))?>" class="cart-qty"><?php csrf_field();?><input type="hidden" name="action" value="cart_update"><input type="hidden" name="product_id" value="<?=$p['id']?>"><input type="number" name="quantity" min="0" max="<?=$p['stock']?>" value="<?=$p['qty']?>"><button class="btn btn-ghost btn-sm">Lưu</button></form></div><?php endforeach;?>
+</div><div class="panel cart-summary"><h2>Tổng thanh toán</h2><div class="summary-total"><span>Thành tiền</span><strong><?=money($total)?></strong></div><p class="muted">Nếu có sản phẩm từ nhiều shop, hệ thống tách thành đơn riêng cho từng shop.</p><a class="btn btn-primary btn-lg" href="<?=h(url('checkout'))?>">Tiến hành đặt hàng →</a><form method="post" action="<?=h(url('cart'))?>"><?php csrf_field();?><input type="hidden" name="action" value="cart_clear"><button class="btn btn-ghost btn-sm">Xóa giỏ hàng</button></form></div></div>
+<?php endif;?></section>
