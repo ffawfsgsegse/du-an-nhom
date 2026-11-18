@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 18, 2026 at 10:20 AM
+-- Generation Time: Nov 18, 2026 at 10:36 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.30
 
@@ -44,7 +44,10 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `status`) VALUES
 (1, 'Mô hình Cơ khí & Robot', 'mo-hinh-co-khi', 'Cánh tay robot, bánh răng, linh kiện kỹ thuật chính xác', 1),
 (2, 'Tượng Figure & Nghệ thuật', 'tuong-figure', 'Mô hình nhân vật Resin 8K độ mịn cao', 1),
-(3, 'Vỏ hộp Điện tử & IoT', 'vo-hop-dien-tu', 'Vỏ bảo vệ mạch Arduino, Raspberry Pi, ESP32', 1);
+(3, 'Vỏ hộp Điện tử & IoT', 'vo-hop-dien-tu', 'Vỏ bảo vệ mạch Arduino, Raspberry Pi, ESP32', 1),
+(4, 'Phụ kiện Bàn làm việc & Decor', 'phu-kien-decor', 'Giá đỡ tai nghe, khay tổ chức cáp, đèn trang trí 3D', 1),
+(5, 'Linh kiện Drone & RC', 'linh-kien-drone-rc', 'Khung bảo vệ cánh quạt, đế gắn camera FPV siêu nhẹ', 1),
+(6, 'Khuôn mẫu & Dụng cụ gia đình', 'khuon-mau-gia-dung', 'Ngàm treo tường, khớp nối sửa chữa đồ gia dụng', 1);
 
 -- --------------------------------------------------------
 
@@ -87,7 +90,9 @@ CREATE TABLE `custom_quotes` (
 --
 
 INSERT INTO `custom_quotes` (`id`, `user_id`, `vendor_id`, `material_id`, `file_path`, `volume_cm3`, `infill_percent`, `layer_height`, `quantity`, `estimated_price`, `status`, `created_at`) VALUES
-(1, 5, 1, 1, 'uploads/stl/robot_arm_v2.stl', 45.8, 20, 0.2, 1, 120000.00, 'ordered', '2026-11-18 17:17:35');
+(1, 5, 1, 1, 'uploads/stl/robot_arm_v2.stl', 45.8, 20, 0.2, 1, 120000.00, 'ordered', '2026-11-18 17:33:21'),
+(2, 5, 2, 3, 'uploads/stl/dragon_miniature_8k.stl', 28.5, 100, 0.05, 2, 370000.00, 'approved', '2026-11-18 17:33:21'),
+(3, 5, 1, 4, 'uploads/stl/gearbox_housing.obj', 62, 40, 0.16, 1, 215000.00, 'pending_review', '2026-11-18 17:33:21');
 
 -- --------------------------------------------------------
 
@@ -130,7 +135,11 @@ CREATE TABLE `materials` (
 INSERT INTO `materials` (`id`, `vendor_id`, `name`, `price_per_cm3`, `colors`, `status`) VALUES
 (1, 1, 'PLA+ Cao cấp', 3000.00, 'Trắng sứ, Đen nhám, Cam kỹ thuật', 1),
 (2, 1, 'ABS Chịu nhiệt', 3600.00, 'Đen, Xám bạc', 1),
-(3, 2, 'Resin 8K Tiêu chuẩn', 6500.00, 'Xám khói, Trắng đục', 1);
+(3, 2, 'Resin 8K Tiêu chuẩn', 6500.00, 'Xám khói, Trắng đục', 1),
+(4, 1, 'PETG Chịu lực', 3400.00, 'Trong suốt, Xanh dương, Đen', 1),
+(5, 1, 'TPU 95A Dẻo đàn hồi', 4200.00, 'Đen nhám, Đỏ tươi', 1),
+(6, 2, 'Resin Tough Kỹ thuật', 7800.00, 'Xanh ngọc, Đen mờ', 1),
+(7, 2, 'ASA Chống tia UV', 4000.00, 'Trắng ngà, Xám đậm', 1);
 
 -- --------------------------------------------------------
 
@@ -159,7 +168,10 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `order_code`, `user_id`, `vendor_id`, `receiver_name`, `receiver_phone`, `shipping_address`, `total_amount`, `payment_method`, `order_status`, `created_at`, `completed_at`) VALUES
-(1, '#ORD-202688', 5, 1, 'Nguyễn Văn An', '0988112233', 'Số 12 Nguyễn Trãi, Thanh Xuân, Hà Nội', 370000.00, 'cod', 'printing', '2026-11-18 17:17:35', NULL);
+(1, '#ORD-202688', 5, 1, 'Nguyễn Văn An', '0988112233', 'Số 12 Nguyễn Trãi, Thanh Xuân, Hà Nội', 360000.00, 'cod', 'printing', '2026-11-16 17:33:21', NULL),
+(2, '#ORD-202689', 5, 2, 'Nguyễn Văn An', '0988112233', 'Số 12 Nguyễn Trãi, Thanh Xuân, Hà Nội', 450000.00, 'banking', 'completed', '2026-11-03 17:33:21', '2026-11-06 17:33:21'),
+(3, '#ORD-202690', 5, 1, 'Nguyễn Văn An', '0988112233', 'Số 12 Nguyễn Trãi, Thanh Xuân, Hà Nội', 350000.00, 'cod', 'completed', '2026-11-13 17:33:21', '2026-11-16 17:33:21'),
+(4, '#ORD-202691', 5, 2, 'Nguyễn Văn An', '0988112233', 'Số 12 Nguyễn Trãi, Thanh Xuân, Hà Nội', 210000.00, 'banking', 'shipping', '2026-11-17 17:33:21', NULL);
 
 -- --------------------------------------------------------
 
@@ -183,7 +195,11 @@ CREATE TABLE `order_items` (
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `custom_quote_id`, `quantity`, `unit_price`) VALUES
 (1, 1, 1, NULL, 1, 240000.00),
-(2, 1, NULL, 1, 1, 120000.00);
+(2, 1, NULL, 1, 1, 120000.00),
+(3, 2, 2, NULL, 1, 450000.00),
+(4, 3, 4, NULL, 1, 185000.00),
+(5, 3, 7, NULL, 1, 165000.00),
+(6, 4, 8, NULL, 1, 210000.00);
 
 -- --------------------------------------------------------
 
@@ -255,12 +271,16 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `vendor_id`, `category_id`, `material_id`, `name`, `price`, `stock`, `dimensions`, `preview_file`, `status`, `created_at`, `deleted_at`) VALUES
-(1, 1, 1, 1, 'Cánh tay Robot 4 bậc tự do', 240000.00, 18, '180 x 120 x 210 mm', 'robot_arm.stl', 'active', '2026-11-18 17:17:35', NULL),
-(2, 2, 2, 3, 'Tượng mô hình Anime Figure 8K', 450000.00, 7, '110 x 110 x 240 mm', 'anime_figure.obj', 'active', '2026-11-18 17:17:35', NULL),
-(3, 1, 3, 2, 'Vỏ hộp Raspberry Pi 5 tản nhiệt', 125000.00, 30, '95 x 68 x 32 mm', 'rpi5_case.stl', 'pending', '2026-11-18 17:17:35', NULL),
-(4, 1, 1, 1, 'Bộ bánh răng hành tinh cơ khí 3 cấp', 185000.00, 25, '110 x 110 x 65 mm', 'planetary_gear.stl', 'active', '2026-11-18 17:17:35', NULL),
-(5, 2, 2, 3, 'Tượng bán thân Chiến binh Cyber Resin', 520000.00, 5, '140 x 120 x 260 mm', 'cyber_bust.obj', 'active', '2026-11-18 17:17:35', NULL),
-(6, 1, 3, 2, 'Hộp bảo vệ mạch Arduino Uno R4 WiFi', 95000.00, 40, '82 x 60 x 28 mm', 'arduino_r4_case.stl', 'active', '2026-11-18 17:17:35', NULL);
+(1, 1, 1, 1, 'Cánh tay Robot 4 bậc tự do', 240000.00, 18, '180 x 120 x 210 mm', 'robot_arm.stl', 'active', '2026-11-18 17:33:21', NULL),
+(2, 2, 2, 3, 'Tượng mô hình Anime Figure 8K', 450000.00, 7, '110 x 110 x 240 mm', 'anime_figure.obj', 'active', '2026-11-18 17:33:21', NULL),
+(3, 1, 3, 2, 'Vỏ hộp Raspberry Pi 5 tản nhiệt', 125000.00, 30, '95 x 68 x 32 mm', 'rpi5_case.stl', 'pending', '2026-11-18 17:33:21', NULL),
+(4, 1, 1, 4, 'Bộ bánh răng hành tinh cơ khí 3 cấp', 185000.00, 25, '110 x 110 x 65 mm', 'planetary_gear.stl', 'active', '2026-11-18 17:33:21', NULL),
+(5, 2, 2, 3, 'Tượng bán thân Chiến binh Cyber Resin', 520000.00, 5, '140 x 120 x 260 mm', 'cyber_bust.obj', 'active', '2026-11-18 17:33:21', NULL),
+(6, 1, 3, 2, 'Hộp bảo vệ mạch Arduino Uno R4 WiFi', 95000.00, 40, '82 x 60 x 28 mm', 'arduino_r4_case.stl', 'active', '2026-11-18 17:33:21', NULL),
+(7, 1, 4, 1, 'Giá đỡ tai nghe hình học Polygon', 165000.00, 22, '135 x 115 x 245 mm', 'headphone_stand.stl', 'active', '2026-11-18 17:33:21', NULL),
+(8, 2, 5, 6, 'Bộ khung bảo vệ cánh Drone FPV 3 inch', 210000.00, 14, '165 x 165 x 38 mm', 'fpv_guard.stl', 'active', '2026-11-18 17:33:21', NULL),
+(9, 1, 6, 4, 'Ngàm treo tường đa năng Pegboard Skadis', 75000.00, 50, '120 x 45 x 40 mm', 'skadis_mount.stl', 'active', '2026-11-18 17:33:21', NULL),
+(10, 2, 4, 7, 'Đèn ngủ mặt trăng Lithophane 18cm', 320000.00, 9, '180 x 180 x 180 mm', 'moon_lamp.stl', 'pending', '2026-11-18 17:33:21', NULL);
 
 -- --------------------------------------------------------
 
@@ -295,7 +315,10 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `rating`, `comment`, `created_at`) VALUES
-(1, 5, 1, 5, 'Bản in sắc nét, khớp nối chuyển động mượt mà, giao hàng nhanh.', '2026-11-18 17:17:35');
+(1, 5, 1, 5, 'Bản in sắc nét, khớp nối chuyển động mượt mà, giao hàng nhanh.', '2026-11-18 17:33:21'),
+(2, 5, 2, 5, 'Chi tiết Resin 8K cực kỳ mịn, không lộ vân lớp in, đóng gói chống sốc kỹ.', '2026-11-18 17:33:21'),
+(3, 5, 4, 4, 'Bánh răng ăn khớp chuẩn, tra thêm chút mỡ bò quay rất êm.', '2026-11-18 17:33:21'),
+(4, 5, 7, 5, 'Giá đỡ chắc chắn, để tai nghe chụp tai nặng vẫn đứng vững.', '2026-11-18 17:33:21');
 
 -- --------------------------------------------------------
 
@@ -320,11 +343,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `phone`, `role`, `status`, `created_at`) VALUES
-(1, 'Admin System', 'admin@3dprinthub.vn', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0900000001', 'admin', 1, '2026-11-18 17:17:35'),
-(2, 'Trần Hoàng Minh', 'techlab@3dprinthub.vn', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0911223344', 'vendor', 1, '2026-11-18 17:17:35'),
-(3, 'Lê Thu Hà', 'artprint@3dprinthub.vn', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0922334455', 'vendor', 1, '2026-11-18 17:17:35'),
-(4, 'Lê Văn C', 'cantho3d@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0912345678', 'vendor', 1, '2026-11-18 17:17:35'),
-(5, 'Nguyễn Văn An', 'nguyenvana@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0988112233', 'client', 1, '2026-11-18 17:17:35');
+(1, 'Admin System', 'admin@3dprinthub.vn', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0900000001', 'admin', 1, '2026-11-18 17:33:21'),
+(2, 'Trần Hoàng Minh', 'techlab@3dprinthub.vn', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0911223344', 'vendor', 1, '2026-11-18 17:33:21'),
+(3, 'Lê Thu Hà', 'artprint@3dprinthub.vn', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0922334455', 'vendor', 1, '2026-11-18 17:33:21'),
+(4, 'Lê Văn C', 'cantho3d@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0912345678', 'vendor', 1, '2026-11-18 17:33:21'),
+(5, 'Nguyễn Văn An', 'nguyenvana@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0988112233', 'client', 1, '2026-11-18 17:33:21');
 
 -- --------------------------------------------------------
 
@@ -351,9 +374,9 @@ CREATE TABLE `vendors` (
 --
 
 INSERT INTO `vendors` (`id`, `user_id`, `shop_name`, `address`, `printer_capacity`, `bank_name`, `bank_account`, `bank_account_holder`, `status`, `created_at`) VALUES
-(1, 2, 'Xưởng In TechLab', 'Thanh Xuân, Hà Nội', '8 máy FDM Bambu Lab P1S', 'Vietcombank', '0011001234567', NULL, 'approved', '2026-11-18 17:17:35'),
-(2, 3, 'ArtPrint Studio', 'Quận 1, TP.HCM', '5 máy Resin 8K SLA', 'Techcombank', '1903456789012', NULL, 'approved', '2026-11-18 17:17:35'),
-(3, 4, 'Xưởng In 3D Cần Thơ', 'Ninh Kiều, Cần Thơ', '6 máy FDM (PLA, ABS)', 'MB Bank', '0912345678', NULL, 'pending', '2026-11-18 17:17:35');
+(1, 2, 'Xưởng In TechLab', 'Thanh Xuân, Hà Nội', '8 máy FDM Bambu Lab P1S', 'Vietcombank', '0011001234567', NULL, 'approved', '2026-11-18 17:33:21'),
+(2, 3, 'ArtPrint Studio', 'Quận 1, TP.HCM', '5 máy Resin 8K SLA', 'Techcombank', '1903456789012', NULL, 'approved', '2026-11-18 17:33:21'),
+(3, 4, 'Xưởng In 3D Cần Thơ', 'Ninh Kiều, Cần Thơ', '6 máy FDM (PLA, ABS)', 'MB Bank', '0912345678', NULL, 'pending', '2026-11-18 17:33:21');
 
 -- --------------------------------------------------------
 
@@ -580,13 +603,13 @@ ALTER TABLE `wallet_transactions`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `custom_quotes`
 --
 ALTER TABLE `custom_quotes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `demo_payments`
@@ -598,31 +621,31 @@ ALTER TABLE `demo_payments`
 -- AUTO_INCREMENT for table `materials`
 --
 ALTER TABLE `materials`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
