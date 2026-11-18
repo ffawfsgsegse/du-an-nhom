@@ -434,7 +434,10 @@ SET @seed_query = IF(@seed_empty_database = 1,
 'INSERT INTO `products` (`id`, `vendor_id`, `category_id`, `material_id`, `name`, `price`, `stock`, `dimensions`, `preview_file`, `status`) VALUES
 (1, 1, 1, 1, ''Cánh tay Robot 4 bậc tự do'', 240000.00, 18, ''180 x 120 x 210 mm'', ''robot_arm.stl'', ''active''),
 (2, 2, 2, 3, ''Tượng mô hình Anime Figure 8K'', 450000.00, 7, ''110 x 110 x 240 mm'', ''anime_figure.obj'', ''active''),
-(3, 1, 3, 2, ''Vỏ hộp Raspberry Pi 5 tản nhiệt'', 125000.00, 30, ''95 x 68 x 32 mm'', ''rpi5_case.stl'', ''pending'');',
+(3, 1, 3, 2, ''Vỏ hộp Raspberry Pi 5 tản nhiệt'', 125000.00, 30, ''95 x 68 x 32 mm'', ''rpi5_case.stl'', ''pending''),
+(4, 1, 1, 1, ''Bộ bánh răng hành tinh cơ khí 3 cấp'', 185000.00, 25, ''110 x 110 x 65 mm'', ''planetary_gear.stl'', ''active''),
+(5, 2, 2, 3, ''Tượng bán thân Chiến binh Cyber Resin'', 520000.00, 5, ''140 x 120 x 260 mm'', ''cyber_bust.obj'', ''active''),
+(6, 1, 3, 2, ''Hộp bảo vệ mạch Arduino Uno R4 WiFi'', 95000.00, 40, ''82 x 60 x 28 mm'', ''arduino_r4_case.stl'', ''active'');',
 'DO 0');
 PREPARE seed_stmt_3d FROM @seed_query;
 EXECUTE seed_stmt_3d;
