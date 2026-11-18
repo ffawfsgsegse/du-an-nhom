@@ -412,7 +412,10 @@ SET @seed_query = IF(@seed_empty_database = 1,
 'INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `status`) VALUES
 (1, ''Mô hình Cơ khí & Robot'', ''mo-hinh-co-khi'', ''Cánh tay robot, bánh răng, linh kiện kỹ thuật chính xác'', 1),
 (2, ''Tượng Figure & Nghệ thuật'', ''tuong-figure'', ''Mô hình nhân vật Resin 8K độ mịn cao'', 1),
-(3, ''Vỏ hộp Điện tử & IoT'', ''vo-hop-dien-tu'', ''Vỏ bảo vệ mạch Arduino, Raspberry Pi, ESP32'', 1);',
+(3, ''Vỏ hộp Điện tử & IoT'', ''vo-hop-dien-tu'', ''Vỏ bảo vệ mạch Arduino, Raspberry Pi, ESP32'', 1),
+(4, ''Phụ kiện Bàn làm việc & Decor'', ''phu-kien-decor'', ''Giá đỡ tai nghe, khay tổ chức cáp, đèn trang trí 3D'', 1),
+(5, ''Linh kiện Drone & RC'', ''linh-kien-drone-rc'', ''Khung bảo vệ cánh quạt, đế gắn camera FPV siêu nhẹ'', 1),
+(6, ''Khuôn mẫu & Dụng cụ gia đình'', ''khuon-mau-gia-dung'', ''Ngàm treo tường, khớp nối sửa chữa đồ gia dụng'', 1);',
 'DO 0');
 PREPARE seed_stmt_3d FROM @seed_query;
 EXECUTE seed_stmt_3d;
@@ -423,7 +426,11 @@ SET @seed_query = IF(@seed_empty_database = 1,
 'INSERT INTO `materials` (`id`, `vendor_id`, `name`, `price_per_cm3`, `colors`, `status`) VALUES
 (1, 1, ''PLA+ Cao cấp'', 3000.00, ''Trắng sứ, Đen nhám, Cam kỹ thuật'', 1),
 (2, 1, ''ABS Chịu nhiệt'', 3600.00, ''Đen, Xám bạc'', 1),
-(3, 2, ''Resin 8K Tiêu chuẩn'', 6500.00, ''Xám khói, Trắng đục'', 1);',
+(3, 2, ''Resin 8K Tiêu chuẩn'', 6500.00, ''Xám khói, Trắng đục'', 1),
+(4, 1, ''PETG Chịu lực'', 3400.00, ''Trong suốt, Xanh dương, Đen'', 1),
+(5, 1, ''TPU 95A Dẻo đàn hồi'', 4200.00, ''Đen nhám, Đỏ tươi'', 1),
+(6, 2, ''Resin Tough Kỹ thuật'', 7800.00, ''Xanh ngọc, Đen mờ'', 1),
+(7, 2, ''ASA Chống tia UV'', 4000.00, ''Trắng ngà, Xám đậm'', 1);',
 'DO 0');
 PREPARE seed_stmt_3d FROM @seed_query;
 EXECUTE seed_stmt_3d;
@@ -435,9 +442,13 @@ SET @seed_query = IF(@seed_empty_database = 1,
 (1, 1, 1, 1, ''Cánh tay Robot 4 bậc tự do'', 240000.00, 18, ''180 x 120 x 210 mm'', ''robot_arm.stl'', ''active''),
 (2, 2, 2, 3, ''Tượng mô hình Anime Figure 8K'', 450000.00, 7, ''110 x 110 x 240 mm'', ''anime_figure.obj'', ''active''),
 (3, 1, 3, 2, ''Vỏ hộp Raspberry Pi 5 tản nhiệt'', 125000.00, 30, ''95 x 68 x 32 mm'', ''rpi5_case.stl'', ''pending''),
-(4, 1, 1, 1, ''Bộ bánh răng hành tinh cơ khí 3 cấp'', 185000.00, 25, ''110 x 110 x 65 mm'', ''planetary_gear.stl'', ''active''),
+(4, 1, 1, 4, ''Bộ bánh răng hành tinh cơ khí 3 cấp'', 185000.00, 25, ''110 x 110 x 65 mm'', ''planetary_gear.stl'', ''active''),
 (5, 2, 2, 3, ''Tượng bán thân Chiến binh Cyber Resin'', 520000.00, 5, ''140 x 120 x 260 mm'', ''cyber_bust.obj'', ''active''),
-(6, 1, 3, 2, ''Hộp bảo vệ mạch Arduino Uno R4 WiFi'', 95000.00, 40, ''82 x 60 x 28 mm'', ''arduino_r4_case.stl'', ''active'');',
+(6, 1, 3, 2, ''Hộp bảo vệ mạch Arduino Uno R4 WiFi'', 95000.00, 40, ''82 x 60 x 28 mm'', ''arduino_r4_case.stl'', ''active''),
+(7, 1, 4, 1, ''Giá đỡ tai nghe hình học Polygon'', 165000.00, 22, ''135 x 115 x 245 mm'', ''headphone_stand.stl'', ''active''),
+(8, 2, 5, 6, ''Bộ khung bảo vệ cánh Drone FPV 3 inch'', 210000.00, 14, ''165 x 165 x 38 mm'', ''fpv_guard.stl'', ''active''),
+(9, 1, 6, 4, ''Ngàm treo tường đa năng Pegboard Skadis'', 75000.00, 50, ''120 x 45 x 40 mm'', ''skadis_mount.stl'', ''active''),
+(10, 2, 4, 7, ''Đèn ngủ mặt trăng Lithophane 18cm'', 320000.00, 9, ''180 x 180 x 180 mm'', ''moon_lamp.stl'', ''pending'');',
 'DO 0');
 PREPARE seed_stmt_3d FROM @seed_query;
 EXECUTE seed_stmt_3d;
@@ -446,7 +457,9 @@ DEALLOCATE PREPARE seed_stmt_3d;
 -- Du lieu mau: custom_quotes
 SET @seed_query = IF(@seed_empty_database = 1,
 'INSERT INTO `custom_quotes` (`id`, `user_id`, `vendor_id`, `material_id`, `file_path`, `volume_cm3`, `infill_percent`, `layer_height`, `quantity`, `estimated_price`, `status`) VALUES
-(1, 5, 1, 1, ''uploads/stl/robot_arm_v2.stl'', 45.8, 20, 0.20, 1, 120000.00, ''ordered'');',
+(1, 5, 1, 1, ''uploads/stl/robot_arm_v2.stl'', 45.8, 20, 0.20, 1, 120000.00, ''ordered''),
+(2, 5, 2, 3, ''uploads/stl/dragon_miniature_8k.stl'', 28.5, 100, 0.05, 2, 370000.00, ''approved''),
+(3, 5, 1, 4, ''uploads/stl/gearbox_housing.obj'', 62.0, 40, 0.16, 1, 215000.00, ''pending_review'');',
 'DO 0');
 PREPARE seed_stmt_3d FROM @seed_query;
 EXECUTE seed_stmt_3d;
@@ -454,8 +467,11 @@ DEALLOCATE PREPARE seed_stmt_3d;
 
 -- Du lieu mau: orders
 SET @seed_query = IF(@seed_empty_database = 1,
-'INSERT INTO `orders` (`id`, `order_code`, `user_id`, `vendor_id`, `receiver_name`, `receiver_phone`, `shipping_address`, `total_amount`, `payment_method`, `order_status`) VALUES
-(1, ''#ORD-202688'', 5, 1, ''Nguyễn Văn An'', ''0988112233'', ''Số 12 Nguyễn Trãi, Thanh Xuân, Hà Nội'', 370000.00, ''cod'', ''printing'');',
+'INSERT INTO `orders` (`id`, `order_code`, `user_id`, `vendor_id`, `receiver_name`, `receiver_phone`, `shipping_address`, `total_amount`, `payment_method`, `order_status`, `created_at`, `completed_at`) VALUES
+(1, ''#ORD-202688'', 5, 1, ''Nguyễn Văn An'', ''0988112233'', ''Số 12 Nguyễn Trãi, Thanh Xuân, Hà Nội'', 360000.00, ''cod'', ''printing'', DATE_SUB(NOW(), INTERVAL 2 DAY), NULL),
+(2, ''#ORD-202689'', 5, 2, ''Nguyễn Văn An'', ''0988112233'', ''Số 12 Nguyễn Trãi, Thanh Xuân, Hà Nội'', 450000.00, ''banking'', ''completed'', DATE_SUB(NOW(), INTERVAL 15 DAY), DATE_SUB(NOW(), INTERVAL 12 DAY)),
+(3, ''#ORD-202690'', 5, 1, ''Nguyễn Văn An'', ''0988112233'', ''Số 12 Nguyễn Trãi, Thanh Xuân, Hà Nội'', 350000.00, ''cod'', ''completed'', DATE_SUB(NOW(), INTERVAL 5 DAY), DATE_SUB(NOW(), INTERVAL 2 DAY)),
+(4, ''#ORD-202691'', 5, 2, ''Nguyễn Văn An'', ''0988112233'', ''Số 12 Nguyễn Trãi, Thanh Xuân, Hà Nội'', 210000.00, ''banking'', ''shipping'', DATE_SUB(NOW(), INTERVAL 1 DAY), NULL);',
 'DO 0');
 PREPARE seed_stmt_3d FROM @seed_query;
 EXECUTE seed_stmt_3d;
@@ -465,7 +481,11 @@ DEALLOCATE PREPARE seed_stmt_3d;
 SET @seed_query = IF(@seed_empty_database = 1,
 'INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `custom_quote_id`, `quantity`, `unit_price`) VALUES
 (1, 1, 1, NULL, 1, 240000.00),
-(2, 1, NULL, 1, 1, 120000.00);',
+(2, 1, NULL, 1, 1, 120000.00),
+(3, 2, 2, NULL, 1, 450000.00),
+(4, 3, 4, NULL, 1, 185000.00),
+(5, 3, 7, NULL, 1, 165000.00),
+(6, 4, 8, NULL, 1, 210000.00);',
 'DO 0');
 PREPARE seed_stmt_3d FROM @seed_query;
 EXECUTE seed_stmt_3d;
@@ -474,7 +494,10 @@ DEALLOCATE PREPARE seed_stmt_3d;
 -- Du lieu mau: reviews
 SET @seed_query = IF(@seed_empty_database = 1,
 'INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `rating`, `comment`) VALUES
-(1, 5, 1, 5, ''Bản in sắc nét, khớp nối chuyển động mượt mà, giao hàng nhanh.'');',
+(1, 5, 1, 5, ''Bản in sắc nét, khớp nối chuyển động mượt mà, giao hàng nhanh.''),
+(2, 5, 2, 5, ''Chi tiết Resin 8K cực kỳ mịn, không lộ vân lớp in, đóng gói chống sốc kỹ.''),
+(3, 5, 4, 4, ''Bánh răng ăn khớp chuẩn, tra thêm chút mỡ bò quay rất êm.''),
+(4, 5, 7, 5, ''Giá đỡ chắc chắn, để tai nghe chụp tai nặng vẫn đứng vững.'');',
 'DO 0');
 PREPARE seed_stmt_3d FROM @seed_query;
 EXECUTE seed_stmt_3d;
