@@ -379,6 +379,13 @@ DEALLOCATE PREPARE stmt;
 UPDATE `orders` SET `completed_at`=`created_at`
 WHERE `order_status`='completed' AND `completed_at` IS NULL;
 
+-- Bo sung truong ho so mo gian hang chi tiet
+SET @has_vendor_phone = (SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='vendors' AND COLUMN_NAME='contact_phone');
+SET @sql_v = IF(@has_vendor_phone = 0,
+  'ALTER TABLE `vendors` ADD COLUMN `contact_phone` VARCHAR(20) NULL AFTER `address`, ADD COLUMN `printer_tech` VARCHAR(100) NULL AFTER `printer_capacity`, ADD COLUMN `max_build_volume` VARCHAR(100) NULL AFTER `printer_tech`, ADD COLUMN `description` TEXT NULL AFTER `max_build_volume`, ADD COLUMN `tax_or_cccd` VARCHAR(50) NULL AFTER `description`',
+  'SELECT ''vendors extended columns existed'' AS info');
+PREPARE stmt_v FROM @sql_v; EXECUTE stmt_v; DEALLOCATE PREPARE stmt_v;
+
 -- PHAN 8 / 8: DU LIEU MAU, CHI NAP KHI BANG users DANG RONG
 -- Chi them data mau cho database moi; tranh sua ID / xung dot du lieu cu.
 SET @seed_empty_database = (SELECT IF(COUNT(*) = 0, 1, 0) FROM `users`);
