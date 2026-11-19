@@ -30,9 +30,30 @@ function auth_action(string $action): void {
  if($action==='apply_vendor'){
   $u=need_role('client');
   if(vendor_of_user())throw new RuntimeException('Bạn đã có hồ sơ đăng ký gian hàng.');
-  $name=trim((string)($_POST['shop_name']??''));$address=trim((string)($_POST['address']??''));$capacity=trim((string)($_POST['capacity']??''));
-  if(strlen($name)<3||strlen($name)>150||strlen($address)<5||strlen($address)>255)throw new RuntimeException('Tên gian hàng hoặc địa chỉ không hợp lệ.');
-  execsql('INSERT INTO vendors(user_id,shop_name,address,printer_capacity,status) VALUES(?,?,?, ?, "pending")',[$u['id'],$name,$address,$capacity]);
-  flash('Đã gửi hồ sơ. Admin sẽ duyệt trước khi bạn đăng hàng.');go('apply');
+  $name=trim((string)($_POST['shop_name']??''));
+  $phone=trim((string)($_POST['contact_phone']??''));
+  $address=trim((string)($_POST['address']??''));
+  $tech=implode(', ',array_intersect((array)($_POST['printer_tech']??[]),['FDM','SLA/DLP Resin','SLS','MJF']));
+  $capacity=trim((string)($_POST['capacity']??''));
+  $volume=trim((string)($_POST['max_build_volume']??''));
+  $desc=trim((string)($_POST['description']??''));
+  $tax=trim((string)($_POST['tax_or_cccd']??''));
+  $bankName=trim((string)($_POST['bank_name']??''));
+  $bankAcc=trim((string)($_POST['bank_account']??''));
+  $bankHolder=strtoupper(trim((string)($_POST['bank_account_holder']??'')));
+
+  if(strlen($name)<3||strlen($name)>150)throw new RuntimeException('Tên gian hàng từ 3–150 ký tự.');
+  if(!preg_match('/^[+0-9 .-]{8,20}$/',$phone))throw new RuntimeException('Số điện thoại xưởng không hợp lệ.');
+  if(strlen($address)<5||strlen($address)>255)throw new RuntimeException('Địa chỉ xưởng không hợp lệ.');
+  if($tech==='')throw new RuntimeException('Hãy chọn ít nhất một công nghệ in 3D.');
+  if(strlen($tax)<9||strlen($tax)>30)throw new RuntimeException('Số CCCD hoặc Mã số thuế không hợp lệ.');
+  if($bankName===''||strlen($bankAcc)<6||strlen($bankHolder)<3)throw new RuntimeException('Vui lòng nhập đầy đủ thông tin tài khoản ngân hàng nhận đối soát.');
+  if(empty($_POST['agree_terms']))throw new RuntimeException('Bạn cần đồng ý với điều khoản hoạt động của 3DPrintHub.');
+
+  execsql(
+   'INSERT INTO vendors(user_id,shop_name,address,contact_phone,printer_capacity,printer_tech,max_build_volume,description,tax_or_cccd,bank_name,bank_account,bank_account_holder,status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,"pending")',
+   [$u['id'],$name,$address,$phone,$capacity,$tech,$volume,$desc,$tax,$bankName,$bankAcc,$bankHolder]
+  );
+  flash('Đã gửi hồ sơ mở gian hàng chi tiết. Admin sẽ thẩm định và phản hồi sớm.');go('apply');
  }
 }
