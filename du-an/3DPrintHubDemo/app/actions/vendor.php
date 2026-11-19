@@ -4,6 +4,7 @@ defined('APP_BOOTSTRAPPED')||exit;
 function vendor_action(string $action): void {
  global $pdo;
  $vendor=approved_vendor();
+ if($action==='vendor_payout_request'){payout_submit($vendor);return;}
  if($action==='vendor_material_add'){
   $name=trim((string)($_POST['name']??''));$price=safe_price($_POST['price_per_cm3']??0);
   if(strlen($name)<2||strlen($name)>100)throw new RuntimeException('Tên vật liệu không hợp lệ.');
@@ -20,9 +21,8 @@ function vendor_action(string $action): void {
    }
    execsql('UPDATE orders SET order_status=?,completed_at=IF(?="completed",NOW(),completed_at) WHERE id=?',[$next,$next,$oid]);
    if($next==='completed'){
-    if($o['payment_method']==='cod')execsql('INSERT IGNORE INTO cod_collections(order_id,collected_by,note) VALUES(?,?,"DEMO: người bán xác nhận đã thu tiền COD")',[$oid,user()['id']]);
-    $fee=round((float)$o['total_amount']*0.05);$net=(float)$o['total_amount']-$fee;
-    execsql('INSERT IGNORE INTO vendor_earnings(order_id,vendor_id,gross_amount,platform_fee,net_amount,status,eligible_at) VALUES(?,?,?,?,?,"eligible",NOW())',[$oid,$vendor['id'],$o['total_amount'],$fee,$net]);
+    if($o['payment_method']==='cod')execsql('INSERT IGNORE INTO cod_collections(order_id,collected_by,note) VALUES(?,?,?)',[$oid,user()['id'],'Xưởng xác nhận đã giao. Chờ đối soát COD.']);
+    payout_record_completed_order($o);
    }
    $pdo->commit();flash('Đã chuyển đơn sang '.order_status_label($next).'.');go('vendor_orders');
   }catch(Throwable $e){if($pdo->inTransaction())$pdo->rollBack();throw $e;}

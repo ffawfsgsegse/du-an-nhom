@@ -28,6 +28,7 @@ if (function_exists('user') && user()) {
      <a href="<?=h(url('catalog'))?>">Khám phá</a>
      <?php if(user()):?>
      <a href="<?=h(url('topup'))?>">💳 Nạp tiền ví</a>
+     <?php if(in_array(user()['role'],['client','vendor'],true)):?><a href="<?=h(url('wallet_withdrawals'))?>">Rút ví</a><?php endif;?>
      <?php endif;?>
      <a href="<?=h(url('apply'))?>">Bán hàng trên 3DPrintHub</a>
  </nav>
@@ -42,7 +43,7 @@ if (function_exists('user') && user()) {
 
   <a class="cart-link" href="<?=h(url('cart'))?>" title="Giỏ hàng">🛒 <span><?=cart_count()?></span></a>
   <?php if(user()):?>
-  <?php if(user()['role']==='admin'):?><a class="btn btn-outline btn-sm" href="<?=h(url('admin_dashboard'))?>">Admin</a><?php endif;?>
+  <?php if(user()['role']==='admin'):?><a class="btn btn-outline btn-sm" href="<?=h(url('admin_dashboard'))?>">Admin</a><a class="btn btn-outline btn-sm" href="<?=h(url('admin_payouts'))?>">Chi trả shop</a><?php endif;?>
   <?php if(user()['role']==='vendor'):?><a class="btn btn-outline btn-sm" href="<?=h(url('vendor_dashboard'))?>">Kênh bán</a><?php endif;?>
   <a class="user-pill" href="<?=h(url('my_orders'))?>"><?=h(user()['full_name'])?></a>
   <form class="inline-form" method="post" action="<?=h(url('home'))?>"><?php csrf_field();?><input type="hidden" name="action" value="logout"><button class="btn btn-ghost btn-sm">Đăng xuất</button></form>

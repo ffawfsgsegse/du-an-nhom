@@ -8,6 +8,7 @@ const DB_PASS = '';
 
 // Dán API Key của webhook trên SePay vào giữa hai dấu nháy.
 const SEPAY_WEBHOOK_API_KEY = '503d64e1e37aca94973504627a558536c4a966e23f7296351d0f87e5b88692df';
+const VIETTEL_POST_TOKEN = '22D86BE1BE9D5B842CF0109502C8A8AC';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_set_cookie_params([

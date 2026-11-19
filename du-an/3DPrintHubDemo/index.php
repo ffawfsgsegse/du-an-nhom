@@ -7,6 +7,8 @@ require __DIR__.'/app/helpers.php';
 require __DIR__.'/app/authorization.php';
 require __DIR__.'/app/repositories/products.php';
 require __DIR__.'/app/repositories/orders.php';
+require __DIR__.'/app/vendor_payouts.php';
+require __DIR__.'/app/wallet_withdrawals.php';
 require __DIR__.'/app/repositories/analytics.php';
 require __DIR__.'/payments.php'; // Nạp tệp chứa hàm tạo mã QR VietQR / SePay
 
@@ -18,6 +20,8 @@ $routes=[
  'admin_dashboard'=>'admin/dashboard.php','admin_products'=>'admin/products.php','admin_product_edit'=>'admin/product_form.php','admin_categories'=>'admin/categories.php',
  'admin_vendors'=>'admin/vendors.php','admin_users'=>'admin/users.php','admin_orders'=>'admin/orders.php','admin_analytics'=>'admin/analytics.php',
  'topup' => 'pages/topup.php',
+ 'vendor_payouts'=>'pages/vendor_payouts.php','admin_payouts'=>'pages/admin_payouts.php',
+ 'wallet_withdrawals'=>'pages/wallet_withdrawals.php','admin_wallet_withdrawals'=>'pages/wallet_withdrawals.php',
 ];
 $page=(string)($_GET['page']??'home');
 if(!isset($routes[$page])){$page='not_found';http_response_code(404);}
@@ -27,13 +31,15 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   check_csrf();$action=(string)($_POST['action']??'');
   if(in_array($action,['login','register','logout','apply_vendor'],true)){
    require __DIR__.'/app/actions/auth.php';auth_action($action);
+  }elseif($action==='wallet_withdraw_request'){
+   $buyer=need_role('client','vendor');wallet_withdraw_request((int)$buyer['id']);
   }elseif(str_starts_with($action,'cart_')){
    require __DIR__.'/app/actions/cart.php';cart_action($action);
   }elseif(in_array($action,['place_order','cancel_order','demo_confirm'],true)){
    require __DIR__.'/app/actions/checkout.php';checkout_action($action);
   }elseif(str_starts_with($action,'vendor_product_')||str_starts_with($action,'admin_product_')){
    require __DIR__.'/app/actions/products.php';product_action($action);
-  }elseif(in_array($action,['vendor_material_add','vendor_order_status'],true)){
+  }elseif(in_array($action,['vendor_material_add','vendor_order_status','vendor_payout_request'],true)){
    require __DIR__.'/app/actions/vendor.php';vendor_action($action);
   }elseif(str_starts_with($action,'admin_')){
    require __DIR__.'/app/actions/admin.php';admin_action($action);
@@ -44,7 +50,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
  catch(Throwable $e){$errors[]=$e->getMessage();}
 }
 if(in_array($page,['login','register'],true)&&user())go('home');
-if(in_array($page,['cart','checkout','my_orders','demo_payment'],true))need_login();
+if(in_array($page,['cart','checkout','my_orders','demo_payment','wallet_withdrawals'],true))need_login();
 if(str_starts_with($page,'vendor_'))need_role('vendor');
 if(str_starts_with($page,'admin_'))need_role('admin');
 $flash=$_SESSION['flash']??null;unset($_SESSION['flash']);
