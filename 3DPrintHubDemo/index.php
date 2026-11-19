@@ -63,6 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (str_starts_with($action, 'admin_')) {
             require __DIR__ . '/app/actions/admin.php';
             admin_action($action);
+        } elseif ($action === 'review_add') {
+            require __DIR__ . '/app/actions/reviews.php';
+            review_action($action);
         } else throw new RuntimeException('Hành động không tồn tại.');
     } catch (PDOException $e) {
         error_log('3DPrintHub SQL: ' . $e->getMessage());
