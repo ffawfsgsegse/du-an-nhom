@@ -68,4 +68,16 @@ function vendor_action(string $action): void
         flash('Đã cập nhật hồ sơ gian hàng.');
         go('vendor_profile');
     }
+    if ($action === 'vendor_payout_request') {
+        if (empty($vendor['bank_name']) || empty($vendor['bank_account']) || empty($vendor['bank_account_holder'])) {
+            throw new RuntimeException('Vui lòng cập nhật đầy đủ tài khoản ngân hàng trong Hồ sơ gian hàng trước khi yêu cầu đối soát.');
+        }
+        $eligible = dbone('SELECT COALESCE(SUM(net_amount),0) total, COUNT(*) cnt FROM vendor_earnings WHERE vendor_id=? AND status="eligible"', [$vendor['id']]);
+        if ((int)($eligible['cnt'] ?? 0) === 0 || (float)($eligible['total'] ?? 0) <= 0) {
+            throw new RuntimeException('Hiện chưa có khoản thu nhập khả dụng nào để đối soát.');
+        }
+        execsql('UPDATE vendor_earnings SET status="paid", paid_at=NOW() WHERE vendor_id=? AND status="eligible"', [$vendor['id']]);
+        flash('Đã gửi yêu cầu đối soát ' . money($eligible['total']) . ' về tài khoản ' . $vendor['bank_name'] . ' - ' . $vendor['bank_account'] . '.');
+        go('vendor_earnings');
+    }
 }

@@ -8,7 +8,7 @@ $links = $adminMode ? [
     ['admin_users', '♙', 'Người dùng'],
     ['admin_orders', '▤', 'Đơn hàng'],
     ['admin_analytics', '▥', 'Thống kê doanh thu']
-] : [['vendor_dashboard', '◈', 'Tổng quan'], ['vendor_products', '▣', 'Sản phẩm / vật liệu'], ['vendor_orders', '▤', 'Đơn hàng'], ['vendor_profile', '⚙', 'Hồ sơ gian hàng']];
+] : [['vendor_dashboard', '◈', 'Tổng quan'], ['vendor_products', '▣', 'Sản phẩm / vật liệu'], ['vendor_orders', '▤', 'Đơn hàng'], ['vendor_earnings', '₫', 'Doanh thu & Đối soát'], ['vendor_profile', '⚙', 'Hồ sơ gian hàng']];
 ?>
 <aside class="panel dash-sidebar">
     <div class="dash-side-header">✦ <?= $adminMode ? 'ADMIN CONTROL' : 'KÊNH NGƯỜI BÁN' ?></div>

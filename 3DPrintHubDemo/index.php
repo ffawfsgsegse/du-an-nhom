@@ -25,6 +25,7 @@ $routes = [
     'vendor_product_edit' => 'vendor/product_form.php',
     'vendor_orders' => 'vendor/orders.php',
     'vendor_profile' => 'vendor/profile.php',
+    'vendor_earnings' => 'vendor/earnings.php',
     'admin_dashboard' => 'admin/dashboard.php',
     'admin_products' => 'admin/products.php',
     'admin_product_edit' => 'admin/product_form.php',
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (str_starts_with($action, 'vendor_product_') || str_starts_with($action, 'admin_product_')) {
             require __DIR__ . '/app/actions/products.php';
             product_action($action);
-        } elseif (in_array($action, ['vendor_material_add', 'vendor_order_status', 'vendor_profile_save'], true)) {
+        } elseif (in_array($action, ['vendor_material_add', 'vendor_order_status', 'vendor_profile_save', 'vendor_payout_request'], true)) {
             require __DIR__ . '/app/actions/vendor.php';
             vendor_action($action);
         } elseif (str_starts_with($action, 'admin_')) {
