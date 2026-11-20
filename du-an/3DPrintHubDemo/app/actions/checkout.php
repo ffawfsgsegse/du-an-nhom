@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 defined('APP_BOOTSTRAPPED') || exit;
 require_once __DIR__ . '/../viettelpost.php';
+require_once __DIR__ . '/../checkout_delivery.php';
 
 /** Giá lưu trong MySQL và số dư ví được đối chiếu theo đơn vị đồng. */
 function checkout_dong(mixed $value): int
@@ -92,11 +93,19 @@ function checkout_action(string $action): void
     if ($action === 'place_order') {
         $name = checkout_post_text('receiver_name');
         $phone = checkout_post_text('receiver_phone');
-        $address = checkout_post_text('address');
+        $delivery = checkout_delivery_fields($_POST);
+        $address = checkout_delivery_address($delivery);
+        $note = checkout_post_text('shipping_note');
         $method = checkout_post_text('payment_option', 'cod');
-        if (strlen($name) < 2 || strlen($name) > 100 || !preg_match('/^[+0-9 .-]{8,20}$/D', $phone)
-            || strlen($address) < 10 || strlen($address) > 255) {
-            throw new RuntimeException('Hãy nhập đúng tên, số điện thoại và địa chỉ nhận hàng.');
+        if (strlen($name) < 2 || strlen($name) > 100 || !preg_match('/^[+0-9 .-]{8,20}$/D', $phone)) {
+            throw new RuntimeException('Hãy nhập đúng tên và số điện thoại người nhận.');
+        }
+        if ($delivery['shipping_street'] === '' || $delivery['shipping_ward'] === ''
+            || $delivery['shipping_province'] === '' || !preg_match('/\A.{1,255}\z/u', $address)) {
+            throw new RuntimeException('Hãy nhập số nhà và đường, phường/xã, tỉnh/thành phố. Địa chỉ tối đa 255 ký tự.');
+        }
+        if (!preg_match('/\A.{0,255}\z/us', $note)) {
+            throw new RuntimeException('Ghi chú giao hàng tối đa 255 ký tự.');
         }
         if (!in_array($method, ['cod', 'wallet'], true)) {
             throw new RuntimeException('Hãy chọn COD hoặc thanh toán bằng ví.');
@@ -126,6 +135,7 @@ function checkout_action(string $action): void
             $_SESSION['checkout_quote'] = [
                 'id' => bin2hex(random_bytes(16)), 'created_at' => time(), 'user_id' => $userId,
                 'name' => $name, 'phone' => $phone, 'address' => $address, 'method' => $method,
+                'address_fields' => $delivery, 'note' => $note,
                 'groups' => $groups, 'rates' => $rates, 'total' => $total,
             ];
             return;
@@ -162,10 +172,11 @@ function checkout_action(string $action): void
                     . strtoupper(substr(hash('sha256', $quote['id'] . ':' . $vendor), 0, 20));
                 execsql(
                     "INSERT INTO orders
-                     (order_code,user_id,vendor_id,receiver_name,receiver_phone,shipping_address,
+                     (order_code,user_id,vendor_id,receiver_name,receiver_phone,shipping_address,shipping_note,
                       shipping_fee,shipping_service_code,total_amount,payment_method,order_status)
-                     VALUES (?,?,?,?,?,?,?,?,?,?,'pending')",
-                    [$code, $userId, $vendor, $name, $phone, $address, $rate['fee'], $rate['service_code'], $total, $method]
+                     VALUES (?,?,?,?,?,?,?,?,?,?,?,'pending')",
+                    [$code, $userId, $vendor, $name, $phone, $address, $note !== '' ? $note : null,
+                     $rate['fee'], $rate['service_code'], $total, $method]
                 );
                 $orderId = (int)$pdo->lastInsertId();
 

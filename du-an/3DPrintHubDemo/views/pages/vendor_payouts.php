@@ -21,7 +21,7 @@ $statuses = ['pending'=>'Chờ xử lý','processing'=>'Đang xử lý','paid'=>
                     <input id="withdraw-amount" type="number" name="amount" min="<?= VENDOR_PAYOUT_FEE + 1 ?>" max="<?= h($available) ?>" required>
                 </label>
                 <p>Thực nhận <strong id="withdraw-net" aria-live="polite">0 đ</strong></p>
-                <label>Ngân hàng <input name="bank_name" maxlength="100" required value="<?= h($vendor['bank_name'] ?? '') ?>"></label>
+                <?php require __DIR__ . '/../partials/withdrawal_bank.php'; ?>
                 <label>Số tài khoản <input name="bank_account" inputmode="numeric" maxlength="30" required value="<?= h($vendor['bank_account'] ?? '') ?>"></label>
                 <label>Chủ tài khoản <input name="bank_holder" maxlength="120" required value="<?= h($vendor['bank_account_holder'] ?? '') ?>"></label>
                 <button class="btn btn-primary">Gửi yêu cầu rút tiền</button>

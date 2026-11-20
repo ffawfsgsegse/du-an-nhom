@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 defined('APP_BOOTSTRAPPED') || exit;
+require_once __DIR__ . '/withdrawal_banks.php';
 
 const VENDOR_PAYOUT_FEE = 5000;
 
@@ -70,7 +71,7 @@ function payout_submit(array $vendor): void
     $vendorId = (int)$vendor['id'];
     $amount = positive_int($_POST['amount'] ?? '', 99999999999999);
     $key = payout_text('request_key');
-    $bank = payout_text('bank_name');
+    $bank = withdrawal_bank_name(payout_text('bank_name'));
     $account = payout_text('bank_account');
     $holder = payout_text('bank_holder');
     if ($amount <= VENDOR_PAYOUT_FEE || !preg_match('/\A[a-f0-9]{32}\z/', $key)) {

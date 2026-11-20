@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 defined('APP_BOOTSTRAPPED') || exit;
+require_once __DIR__ . '/../../app/checkout_delivery.php';
 
 $user = need_login();
 $quote = $_SESSION['checkout_quote'] ?? null;
@@ -10,7 +11,10 @@ if (!$quote || $quote['user_id'] !== (int)$user['id'] || time() - $quote['create
 }
 $receiverName = is_string($_POST['receiver_name'] ?? null) ? trim($_POST['receiver_name']) : ($quote['name'] ?? $user['full_name']);
 $receiverPhone = is_string($_POST['receiver_phone'] ?? null) ? trim($_POST['receiver_phone']) : ($quote['phone'] ?? ($user['phone'] ?? ''));
-$address = is_string($_POST['address'] ?? null) ? trim($_POST['address']) : ($quote['address'] ?? '');
+$delivery = checkout_delivery_fields($_SERVER['REQUEST_METHOD'] === 'POST' ? $_POST : ($quote['address_fields'] ?? []));
+$address = checkout_delivery_address($delivery);
+$note = $_SERVER['REQUEST_METHOD'] === 'POST' ? ($_POST['shipping_note'] ?? '') : ($quote['note'] ?? '');
+$note = is_string($note) ? $note : '';
 $method = ($_POST['payment_option'] ?? ($quote['method'] ?? 'cod')) === 'wallet' ? 'wallet' : 'cod';
 if ($quote && ($address !== $quote['address'] || $method !== $quote['method'])) {
     $quote = null;
@@ -38,8 +42,29 @@ if ($quote && ($address !== $quote['address'] || $method !== $quote['method'])) 
                         <input type="tel" name="receiver_phone" autocomplete="tel" required maxlength="20" value="<?= h($receiverPhone) ?>">
                     </label>
                     <label>
-                        Địa chỉ nhận hàng
-                        <textarea name="address" autocomplete="street-address" required minlength="10" maxlength="255" rows="3" placeholder="Số nhà, đường, phường/xã, tỉnh/thành"><?= h($address) ?></textarea>
+                        Số nhà và tên đường
+                        <input name="shipping_street" autocomplete="address-line1" maxlength="255" required
+                               value="<?= h($delivery['shipping_street']) ?>">
+                    </label>
+                    <label>
+                        Phường / Xã
+                        <input name="shipping_ward" autocomplete="address-level3" maxlength="100" required
+                               value="<?= h($delivery['shipping_ward']) ?>">
+                    </label>
+                    <label>
+                        Quận / Huyện (nếu có)
+                        <input name="shipping_district" autocomplete="address-level2" maxlength="100"
+                               value="<?= h($delivery['shipping_district']) ?>">
+                    </label>
+                    <label>
+                        Tỉnh / Thành phố
+                        <input name="shipping_province" autocomplete="address-level1" maxlength="100" required
+                               value="<?= h($delivery['shipping_province']) ?>">
+                    </label>
+                    <label>
+                        Ghi chú giao hàng (không bắt buộc)
+                        <textarea name="shipping_note" maxlength="255" rows="2"
+                                  placeholder="Gọi trước khi giao"><?= h($note) ?></textarea>
                     </label>
 
                     <fieldset>

@@ -45,7 +45,7 @@ function wallet_withdraw_request(int $userId): void
     global $pdo;
     $amount = positive_int($_POST['amount'] ?? '', 99999999999999);
     $key = payout_text('request_key');
-    $bank = payout_text('bank_name');
+    $bank = withdrawal_bank_name(payout_text('bank_name'));
     $account = payout_text('bank_account');
     $holder = payout_text('bank_holder');
     if ($amount <= VENDOR_PAYOUT_FEE || !preg_match('/\A[a-f0-9]{32}\z/', $key)) {

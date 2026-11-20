@@ -57,4 +57,7 @@ $flash=$_SESSION['flash']??null;unset($_SESSION['flash']);
 require __DIR__.'/views/layouts/header.php';
 $view=$routes[$page]??'pages/not_found.php';
 require __DIR__.'/views/'.$view;
+if ($page === 'vendor_orders') {
+    require __DIR__.'/views/partials/checkout_shipping_notes.php';
+}
 require __DIR__.'/views/layouts/footer.php';
