@@ -1,0 +1,25 @@
+<?php defined('APP_BOOTSTRAPPED') || exit;
+$v = approved_vendor();
+$orders = vendor_orders((int)$v['id']);
+$nextMap = ['pending' => 'printing', 'printing' => 'shipping', 'shipping' => 'completed']; ?>
+<section class="container section page-top">
+    <div class="dash-layout"><?php require __DIR__ . '/../partials/side_nav.php'; ?><div class="dash-main">
+            <div class="eyebrow">SELLER ORDERS</div>
+            <h1 class="page-title">Đơn hàng <em>của shop</em></h1>
+            <p class="muted">Chuyển trạng thái: Chờ xác nhận → Đang sản xuất → Đang giao → Hoàn tất. Với COD, shop phải tự kiểm tra việc thu tiền trước khi hoàn tất.</p>
+            <?php if (!$orders): ?><div class="panel empty-state">Chưa có đơn hàng.</div><?php endif; ?>
+            <?php foreach ($orders as $o): ?><div class="panel order-panel">
+                    <div class="order-head">
+                        <div><b><?= h($o['order_code']) ?></b><small>Khách: <?= h($o['customer_name']) ?> · <?= h($o['created_at']) ?></small></div><span class="status-pill"><?= h(order_status_label($o['order_status'])) ?></span>
+                    </div>
+                    <div class="order-items"><?php foreach (order_items((int)$o['id']) as $i): ?><div><?= h($i['product_name'] ?? 'In theo yêu cầu') ?> × <?= $i['quantity'] ?> <strong><?= money($i['unit_price'] * $i['quantity']) ?></strong></div><?php endforeach; ?></div>
+                    <div class="order-foot"><strong><?= money($o['total_amount']) ?></strong><span><?= $o['payment_method'] === 'cod' ? 'COD' : 'QR DEMO' ?></span><small><?= h($o['receiver_name']) ?> · <?= h($o['receiver_phone']) ?> · <?= h($o['shipping_address']) ?></small>
+                        <?php if (isset($nextMap[$o['order_status']])): ?>
+                            <?php $pay = $o['payment_method'] === 'banking' ? dbone('SELECT status FROM order_payments WHERE order_id=?', [$o['id']]) : null;
+                            $canMove = $o['payment_method'] === 'cod' || ($pay && $pay['status'] === 'confirmed'); ?>
+                            <?php if ($canMove): ?><form method="post" action="<?= h(url('vendor_orders')) ?>" <?= $nextMap[$o['order_status']] === 'completed' ? 'data-confirm="Xác nhận đã giao hàng và thu COD (nếu COD)?"' : '' ?>><?php csrf_field(); ?><input type="hidden" name="action" value="vendor_order_status"><input type="hidden" name="order_id" value="<?= $o['id'] ?>"><input type="hidden" name="next_status" value="<?= $nextMap[$o['order_status']] ?>"><button class="btn btn-primary btn-sm">Chuyển: <?= h(order_status_label($nextMap[$o['order_status']])) ?></button></form><?php else: ?><span class="notice notice-info">Chờ khách xác nhận QR DEMO</span><?php endif; ?>
+                        <?php endif; ?></div>
+                </div><?php endforeach; ?>
+        </div>
+    </div>
+</section>

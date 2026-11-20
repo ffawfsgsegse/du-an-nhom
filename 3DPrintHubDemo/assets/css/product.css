@@ -1,0 +1,60 @@
+/* Trang chi tiết sản phẩm minh họa. */
+
+.detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  margin-top: 35px;
+}
+
+.detail-visual {
+  height: 470px;
+  background: radial-gradient(circle,#413f7c,#141a2c 65%);
+  border-radius: 24px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.detail-visual>span {
+  font-size: 250px;
+  color: #a38bff;
+}
+
+.detail-info h1 {
+  font-size: 43px;
+  line-height: 1.2;
+}
+
+.big-price {
+  font: 700 34px "Space Grotesk";
+  color: #b99aff;
+  margin: 30px 0;
+}
+
+.back {
+  color: #aaa1e4;
+}
+
+.demo-product-illustration {
+  font-size: 160px;
+  filter: drop-shadow(16px 23px 20px #0006);
+  color: #bda2ff;
+  transform: rotate(-15deg);
+}
+
+.static-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+.static-tags span {
+  padding: 9px 12px;
+  background: #1b2341;
+  border: 1px solid #3b486a;
+  border-radius: 9px;
+  color: #c4cce1;
+  font-size: 12px;
+}
