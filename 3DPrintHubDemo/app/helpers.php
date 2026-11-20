@@ -3,7 +3,13 @@ declare(strict_types=1);
 defined('APP_BOOTSTRAPPED') || exit;
 
 function h(mixed $v): string { return htmlspecialchars((string)$v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }
-function url(string $page='home', array $params=[]): string { return 'index.php?'.http_build_query(array_merge(['page'=>$page],$params)); }
+function url(string $page='home', array $params=[]): string {
+ // Các link Admin đi vào file admin.php riêng, giữ nguyên dữ liệu POST và phân quyền cũ.
+ if (str_starts_with($page, 'admin_')) {
+  return 'admin.php?'.http_build_query(array_merge(['section'=>substr($page, 6)], $params));
+ }
+ return 'index.php?'.http_build_query(array_merge(['page'=>$page],$params));
+}
 function go(string $page='home', array $params=[]): never { header('Location: '.url($page,$params),true,303); exit; }
 function money(float|int|string $n): string { return number_format((float)$n,0,',','.').'đ'; }
 function dball(string $sql,array $args=[]): array { global $pdo; $s=$pdo->prepare($sql);$s->execute($args);return $s->fetchAll(); }

@@ -108,3 +108,7 @@ Không được dùng mã nguồn này trực tiếp để mở sàn thương m�
 - MySQL 8.0+/MariaDB tương thích cấu trúc SQL; PHP server Apache/Laragon.
 - Cần bật MySQL, Apache, đường dẫn quyền ghi `uploads/products`.
 - Hình minh họa QR được cung cấp sẵn trong `assets/`; không cần kết nối ngân hàng.
+
+## Giao diện Admin riêng (theo video)
+
+Truy cập `admin.php` sau khi đăng nhập Admin. Hướng dẫn tùy chỉnh file, tìm kiếm đa thuộc tính, biểu đồ và API tự cập nhật nằm tại **`HUONG_DAN_ADMIN_RIENG.md`**. Giao diện Admin được tách khỏi trang chủ và người bán để dễ sửa.

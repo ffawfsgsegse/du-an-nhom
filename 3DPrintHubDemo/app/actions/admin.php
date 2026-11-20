@@ -4,6 +4,8 @@ defined('APP_BOOTSTRAPPED')||exit;
 function admin_action(string $action): void {
  global $pdo;
  need_role('admin');
+ if(str_starts_with($action,'admin_wallet_withdraw_')){wallet_withdraw_admin($action,(int)user()['id']);return;}
+ if(str_starts_with($action,'admin_payout_')){payout_admin($action,(int)user()['id']);return;}
  if($action==='admin_vendor_review'){
   $id=positive_int($_POST['id']??0);$status=(string)($_POST['status']??'');if(!in_array($status,['approved','rejected'],true))throw new RuntimeException('Trạng thái duyệt không hợp lệ.');
   $pdo->beginTransaction();try{
