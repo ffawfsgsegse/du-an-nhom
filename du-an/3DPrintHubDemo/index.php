@@ -57,7 +57,12 @@ if(in_array($page,['cart','checkout','my_orders','demo_payment','wallet_withdraw
 if(str_starts_with($page,'vendor_'))need_role('vendor');
 if(str_starts_with($page,'admin_'))need_role('admin');
 $flash=$_SESSION['flash']??null;unset($_SESSION['flash']);
-require __DIR__.'/views/layouts/header.php';
+$adminPortal = str_starts_with($page, 'admin_');
+if ($adminPortal) {
+    require_once __DIR__.'/app/admin_icons.php';
+    require_once __DIR__.'/app/repositories/sales_insights.php';
+}
+require __DIR__.($adminPortal ? '/views/admin/layout_start.php' : '/views/layouts/header.php');
 $view=$routes[$page]??'pages/not_found.php';
 require __DIR__.'/views/'.$view;
 if (in_array($page, ['my_orders', 'vendor_orders', 'admin_orders'], true)) {
@@ -66,4 +71,4 @@ if (in_array($page, ['my_orders', 'vendor_orders', 'admin_orders'], true)) {
 if ($page === 'vendor_orders') {
     require __DIR__.'/views/partials/checkout_shipping_notes.php';
 }
-require __DIR__.'/views/layouts/footer.php';
+require __DIR__.($adminPortal ? '/views/admin/layout_end.php' : '/views/layouts/footer.php');
