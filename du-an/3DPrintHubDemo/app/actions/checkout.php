@@ -261,42 +261,7 @@ function checkout_action(string $action): void
             if (!$order || $order['order_status'] !== 'pending') {
                 throw new RuntimeException('Chỉ hủy được đơn đang chờ xác nhận.');
             }
-            $payment = dbone('SELECT status FROM order_payments WHERE order_id=?', [$orderId]);
-            if ($payment && $payment['status'] === 'confirmed' && $order['payment_method'] !== 'wallet') {
-                throw new RuntimeException('Đơn đã thanh toán. Liên hệ Admin để xử lý.');
-            }
-
-            execsql("UPDATE orders SET order_status='cancelled' WHERE id=?", [$orderId]);
-            $items = order_items($orderId);
-            usort($items, static fn (array $a, array $b): int => (int)$a['product_id'] <=> (int)$b['product_id']);
-            foreach ($items as $item) {
-                if ($item['product_id']) {
-                    execsql('UPDATE products SET stock=stock+? WHERE id=?', [$item['quantity'], $item['product_id']]);
-                }
-            }
-
-            if ($order['payment_method'] === 'wallet') {
-                $charge = dbone(
-                    "SELECT amount FROM wallet_transactions WHERE user_id=? AND direction='debit'
-                     AND type='order_payment' AND reference_type='orders' AND reference_id=?",
-                    [$user['id'], $orderId]
-                );
-                if (!$charge || checkout_dong($charge['amount']) !== checkout_dong($order['total_amount'])) {
-                    throw new RuntimeException('Không tìm thấy giao dịch ví của đơn này để hoàn tiền.');
-                }
-                $refund = checkout_dong($charge['amount']);
-                execsql(
-                    'INSERT INTO wallet_accounts(user_id,balance) VALUES(?,?) ON DUPLICATE KEY UPDATE balance=balance+?',
-                    [$user['id'], $refund, $refund]
-                );
-                $account = dbone('SELECT balance FROM wallet_accounts WHERE user_id=?', [$user['id']]);
-                execsql(
-                    "INSERT INTO wallet_transactions
-                     (user_id,direction,amount,balance_after,type,reference_type,reference_id,description)
-                     VALUES (?,'credit',?,?,'order_refund','orders',?,?)",
-                    [$user['id'], $refund, $account['balance'], $orderId, 'Hoàn tiền đơn ' . $order['order_code']]
-                );
-            }
+            cancel_locked_order($order);
             $pdo->commit();
             flash($order['payment_method'] === 'wallet' ? 'Đã hủy đơn và hoàn tiền vào ví.' : 'Đã hủy đơn và hoàn lại tồn kho.');
             go('my_orders');

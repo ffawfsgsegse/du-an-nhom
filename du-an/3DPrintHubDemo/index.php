@@ -7,6 +7,7 @@ require __DIR__.'/app/helpers.php';
 require __DIR__.'/app/authorization.php';
 require __DIR__.'/app/repositories/products.php';
 require __DIR__.'/app/repositories/orders.php';
+require_once __DIR__.'/app/order_cancellations.php';
 require __DIR__.'/app/vendor_payouts.php';
 require __DIR__.'/app/wallet_withdrawals.php';
 require __DIR__.'/app/repositories/analytics.php';
@@ -29,7 +30,9 @@ $errors=[];
 if($_SERVER['REQUEST_METHOD']==='POST'){
  try{
   check_csrf();$action=(string)($_POST['action']??'');
-  if(in_array($action,['login','register','logout','apply_vendor'],true)){
+  if(in_array($action,['order_cancel_request','order_cancel_approve','order_cancel_reject'],true)){
+   require_once __DIR__.'/app/actions/checkout.php';order_cancellation_action($action);
+  }elseif(in_array($action,['login','register','logout','apply_vendor'],true)){
    require __DIR__.'/app/actions/auth.php';auth_action($action);
   }elseif($action==='wallet_withdraw_request'){
    $buyer=need_role('client','vendor');wallet_withdraw_request((int)$buyer['id']);
@@ -57,6 +60,9 @@ $flash=$_SESSION['flash']??null;unset($_SESSION['flash']);
 require __DIR__.'/views/layouts/header.php';
 $view=$routes[$page]??'pages/not_found.php';
 require __DIR__.'/views/'.$view;
+if (in_array($page, ['my_orders', 'vendor_orders', 'admin_orders'], true)) {
+    require __DIR__.'/views/partials/order_cancellations.php';
+}
 if ($page === 'vendor_orders') {
     require __DIR__.'/views/partials/checkout_shipping_notes.php';
 }
