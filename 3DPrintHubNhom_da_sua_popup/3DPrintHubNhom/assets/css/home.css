@@ -1,0 +1,259 @@
+/* Trang chủ: banner, danh mục, ticker và khu CTA. */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  min-height: 590px;
+  gap: 25px;
+  padding-top: 65px;
+  padding-bottom: 70px;
+}
+
+.pulse {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4de7ce;
+  box-shadow: 0 0 12px #4de7ce;
+  margin-right: 7px;
+}
+
+.hero h1 {
+  font-size: clamp(48px,5.3vw,76px);
+  line-height: 1.06;
+  letter-spacing: -3px;
+  margin-bottom: 25px;
+}
+
+.hero-content>p {
+  font-size: 16px;
+  line-height: 1.9;
+  color: #a7afc7;
+  max-width: 510px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 13px;
+  margin: 30px 0 52px;
+  flex-wrap: wrap;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 45px;
+}
+
+.hero-stats b {
+  display: block;
+  font: 700 26px "Space Grotesk";
+}
+
+.hero-stats small {
+  display: block;
+  color: #8791a8;
+  font-size: 11px;
+  margin-top: 7px;
+}
+
+.hero-art {
+  height: 460px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  perspective: 900px;
+}
+
+.orbit {
+  position: absolute;
+  border: 1px solid #7e65d25c;
+  border-radius: 50%;
+  transform: rotateX(65deg) rotateZ(30deg);
+  animation: spin 18s linear infinite;
+}
+
+.orbit1 {
+  width: 420px;
+  height: 420px;
+}
+
+.orbit2 {
+  width: 315px;
+  height: 315px;
+  animation-direction: reverse;
+  border-color: #49d5e86b;
+}
+
+.orb-core {
+  width: 270px;
+  height: 270px;
+  border-radius: 60px;
+  background: linear-gradient(145deg,#a97bff,#5148be 50%,#202f61);
+  box-shadow: 25px 30px 100px #7955f560,inset 15px 15px 35px #ffffff55,inset -15px -15px 35px #090b28;
+  transform: rotate(-22deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 180px;
+  color: #ffffffd8;
+  position: relative;
+  animation: levitate 6s ease-in-out infinite;
+  text-shadow: 8px 8px 15px #14173b;
+}
+
+.orb-core span {
+  position: absolute;
+  font: 800 50px "Space Grotesk";
+  color: #1d2052;
+  text-shadow: 1px 2px 3px #bdb5ff;
+  transform: rotate(22deg);
+}
+
+.float-label {
+  position: absolute;
+  background: #1c2541e6;
+  border: 1px solid #7e7ddf80;
+  box-shadow: 0 15px 35px #0006;
+  border-radius: 12px;
+  padding: 13px 17px;
+  font-size: 12px;
+  backdrop-filter: blur(12px);
+  animation: levitate 5s ease-in-out infinite;
+}
+
+.label1 {
+  top: 50px;
+  right: 0;
+}
+
+.label2 {
+  bottom: 50px;
+  left: 0;
+  animation-delay: -2s;
+}
+
+.ticker {
+  background: linear-gradient(90deg,#503cb1,#7951dc,#31569e);
+  overflow: hidden;
+  padding: 17px;
+  text-align: center;
+  white-space: nowrap;
+  letter-spacing: 5px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.ticker div {
+  animation: marquee 22s linear infinite;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.section-head h2,.cta h2 {
+  font-size: clamp(30px,4vw,43px);
+  letter-spacing: -1.5px;
+  margin: 0;
+}
+
+.section-head a {
+  font-size: 13px;
+  color: #b1a2ff;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 18px;
+}
+
+.category-tile {
+  min-height: 195px;
+  border: 1px solid #ffffff1b;
+  border-radius: 20px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg,#211b45,#11182b);
+  transition: transform .3s,border .3s;
+}
+
+.category-tile:hover,.product-card:hover {
+  transform: translateY(-9px);
+  border-color: #926dff;
+}
+
+.cat1 {
+  background: linear-gradient(145deg,#312047,#17172c);
+}
+
+.cat2 {
+  background: linear-gradient(145deg,#123849,#101a2b);
+}
+
+.cat-icon {
+  font-size: 52px;
+  color: #b3a1ff;
+}
+
+.category-tile h3 {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+
+.category-tile small {
+  font-size: 11px;
+  color: #9da6bc;
+  line-height: 1.6;
+}
+
+.category-tile>span {
+  position: absolute;
+  right: 22px;
+  top: 22px;
+  color: #d5c8ff;
+}
+
+.cta {
+  margin-top: 60px;
+  margin-bottom: 80px;
+  text-align: center;
+  border: 1px solid #a08eff4a;
+  border-radius: 28px;
+  padding-top: 65px;
+  padding-bottom: 65px;
+  background: radial-gradient(ellipse at center,#3b2c7c,#14182e 65%);
+}
+
+.cta p {
+  color: #b8b9d1;
+  margin: 18px 0 25px;
+}
+
+.catalog-shell {
+  min-height: 52vh;
+}
+
+.hero .hero-content .hero-buttons {
+  margin-bottom: 45px;
+}
+
+.hero .float-label {
+  z-index: 2;
+}
+
+.catalog-hint {
+  margin: 0 0 22px;
+  color: #b3bdd4;
+  font-size: 13px;
+}
