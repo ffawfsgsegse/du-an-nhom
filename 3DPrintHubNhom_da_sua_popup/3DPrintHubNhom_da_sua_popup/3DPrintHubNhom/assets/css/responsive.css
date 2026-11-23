@@ -1,0 +1,133 @@
+/* Điều chỉnh cho máy tính bảng và điện thoại. */
+
+@media (max-width:1000px) {
+  .topbar nav {
+    gap: 12px;
+  }
+  .topbar nav a {
+    font-size: 11px;
+  }
+  .nav-user {
+    display: none;
+  }
+  .product-grid {
+    grid-template-columns: repeat(3,1fr);
+  }
+  .hero h1 {
+    font-size: 53px;
+  }
+}
+
+@media (max-width:760px) {
+  .topbar {
+    height: auto;
+    min-height: 72px;
+    flex-wrap: wrap;
+    padding: 12px 20px;
+  }
+  .topbar nav {
+    order: 3;
+    overflow: auto;
+    width: 100%;
+    padding: 6px 0;
+  }
+  .nav-actions {
+    gap: 7px;
+  }
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 60px;
+  }
+  .hero-art {
+    height: 300px;
+  }
+  .orb-core {
+    width: 175px;
+    height: 175px;
+    font-size: 120px;
+    border-radius: 38px;
+  }
+  .orb-core span {
+    font-size: 32px;
+  }
+  .orbit1 {
+    width: 280px;
+    height: 280px;
+  }
+  .orbit2 {
+    width: 220px;
+    height: 220px;
+  }
+  .hero h1 {
+    font-size: 50px;
+  }
+  .categories, .detail {
+    grid-template-columns: 1fr;
+  }
+  .product-grid {
+    grid-template-columns: repeat(2,1fr);
+  }
+  .detail-visual {
+    height: 300px;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+  .float-label {
+    font-size: 9px;
+  }
+}
+
+@media (max-width:460px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-stats {
+    gap: 18px;
+  }
+  .hero-stats b {
+    font-size: 20px;
+  }
+  .hero h1 {
+    font-size: 43px;
+  }
+  .hero-buttons .btn {
+    width: 100%;
+  }
+  .section-head {
+    align-items: start;
+  }
+  .section-head h2 {
+    font-size: 28px;
+  }
+  .auth-card {
+    padding: 25px;
+  }
+  .topbar .btn-sm {
+    padding: 7px;
+  }
+  .topbar .logo {
+    font-size: 17px;
+  }
+}
+
+@media (max-width:760px) {
+  .ui-pills {
+    overflow: auto;
+  }
+  .product-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+  .user-pill {
+    display: none;
+  }
+}
+
+@media (max-width:460px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  .demo-product-illustration {
+    font-size: 100px;
+  }
+}
