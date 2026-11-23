@@ -1,0 +1,35 @@
+/* Chân trang. */
+
+footer {
+  background: #0b1020;
+  border-top: 1px solid #ffffff13;
+  margin-top: 50px;
+  padding: 45px 0 20px;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 30px;
+  color: #9ba4b9;
+  font-size: 13px;
+  line-height: 2.2;
+}
+
+.footer-inner a {
+  display: block;
+}
+
+.copyright {
+  color: #69758e;
+  font-size: 11px;
+  border-top: 1px solid #ffffff12;
+  padding-top: 22px;
+  margin-top: 30px;
+}
+
+.footer-note {
+  margin: 0 0 12px;
+  color: #99a3ba;
+  font-size: 12px;
+}
