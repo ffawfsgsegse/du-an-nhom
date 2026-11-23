@@ -1,9 +1,0 @@
-# HƯỚNG DẪN BẢN ĐÃ SỬA POPUP
-
-1. Giải nén, đặt thư mục `3DPrintHubNhom` vào `C:\laragon\www\` (không ghi đè dự án `3DPrintHubDemo` cũ).
-2. Start All trong Laragon. Mở http://localhost/3DPrintHubNhom/index.php?page=home
-3. Đăng nhập tài khoản chưa quay hôm nay. Popup tự xuất hiện; đóng bằng X; quay và đóng thông báo trúng thưởng sẽ ẩn popup.
-4. Dự án ZIP gốc KHÔNG có `api/spin.php` và KHÔNG có ảnh `assets/wheel-prizes/`. Bản này đã bổ sung API và thay hình quảng bá bằng biểu tượng chữ; ảnh thưởng tùy chọn sẽ tự ẩn nếu thiếu.
-5. Dự án ZIP gốc KHÔNG có bảng `promotions` và `user_rewards` trong SQL đi kèm. Nếu database hiện tại chưa có hai bảng, chạy `database/wheel_setup.sql` bằng phpMyAdmin (chọn đúng database `3dprinthub_db`). Nếu đã có hai bảng thì KHÔNG cần import thêm.
-6. Không sửa `config.php`; giữ nguyên cấu hình của nhóm. Lưu ý file này chứa thông tin cấu hình nhạy cảm: không chia sẻ ZIP công khai.
-7. Không thể kiểm thử kết nối MySQL/Laragon của máy bạn từ đây; cần chạy thử trên máy của bạn.
