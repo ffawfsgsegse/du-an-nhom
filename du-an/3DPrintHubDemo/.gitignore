@@ -1,5 +1,0 @@
-/uploads/products/*
-!/uploads/products/.htaccess
-/.env
-*.log
-.DS_Store
